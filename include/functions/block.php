@@ -20,7 +20,6 @@
 		);
 		 $post = json_encode($postRequest);
 		
-		$cURLConnection = curl_init();
 		
 		$cURLConnection = curl_init($url);
 		curl_setopt($cURLConnection, CURLOPT_HTTPHEADER, $headers);
@@ -30,9 +29,9 @@
 		$apiResponse = curl_exec($cURLConnection);
 		curl_close($cURLConnection);
 		
-		$jsonArrayResponse = $apiResponse;
+
 		
 		
-		return $jsonArrayResponse;
+		return $apiResponse;
 		
 	}

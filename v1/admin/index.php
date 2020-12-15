@@ -42,7 +42,7 @@ $app->get('/getRequests', function (Request $request, Response $response, array 
 
 });
 
-$app->get('/getOrg', function (Request $request, Response $response, array $args) {	
+$app->get('/getOrg', function (Request $request, Response $response) {	
 	try {
 		
 		$pdo = "SELECT `organizationsid`,`OrganizationsName`, `Category`,`Address`, `city`, `longitude`,` latitude`, organizations.`Status` as orgStatus, `State`, `Country` FROM `User` RIGHT JOIN organizations ON User.organizationsid = organizations.Id";
@@ -64,7 +64,7 @@ $app->get('/getOrg', function (Request $request, Response $response, array $args
 
 });
 
-$app->get('/getBags', function (Request $request, Response $response, array $args) {	
+$app->get('/getBags', function (Request $request, Response $response) {	
 	try {
 		
 		$pdo = "SELECT requestbag.id,requestdate,qty,OrganizationsName FROM `requestbag` JOIN organizations ON requestbag.orgid = organizations.id WHERE `treated` = 0";
@@ -86,7 +86,7 @@ $app->get('/getBags', function (Request $request, Response $response, array $arg
 
 });
 
-$app->post('/generateBags', function (Request $request, Response $response, array $args) {	
+$app->post('/generateBags', function (Request $request, Response $response) {	
 	try {
 		
 		$GenId = $request->getParam('reqID');
@@ -98,7 +98,6 @@ $app->post('/generateBags', function (Request $request, Response $response, arra
 			return "The bags has been generated already";
 		}else{
 			$qty = $bagRequest['qty'];
-			$userid = $bagRequest['userid'];
 			$orgid = $bagRequest['orgid'];
 			$x = 1;
 			
@@ -126,8 +125,7 @@ $app->post('/generateBags', function (Request $request, Response $response, arra
 	
 function generateCode($org){
 	# code...
-	$unique = $org . substr(str_shuffle("0123456789"), 0, 5);
-	return $unique;
+	return  $org . substr(str_shuffle("0123456789"), 0, 5);
 }
 
 function verifyCode($bag,$org){

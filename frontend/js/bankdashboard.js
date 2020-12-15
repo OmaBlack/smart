@@ -12,7 +12,7 @@ if (sessionStorage.length == 0) {
 	window.location.replace(`../Login`);
 }else
 {
-	user = JSON.parse(sessionStorage.getItem('user'));
+	let user = JSON.parse(sessionStorage.getItem('user'));
 	
 	document.getElementById("name").innerHTML = user.first_name+' '+user.last_name;
 	

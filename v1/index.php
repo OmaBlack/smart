@@ -13,15 +13,15 @@ include '../../include/functions/dashboard.php';
 $app = new \Slim\App;
 
 
-$app->get('/', function (Request $request, Response $response, array $args) {
+$app->get('/', function (Request $request, Response $response) {
 	
 	try {
-		//$delivered = R::findAll('orders', 'closed=?' , ['opens']);
+		
 		$qury = "SELECT o.* ,u.name, d.dispatch_name FROM orders o, dispatch d, user_info u WHERE o.order_by = u.ref_id AND o.dispatch = d.dispatch_id AND `closed` = 'opens' AND o.order_state = 'Completed'";
 		
 		$delivered = R::getAll( $qury);
 		
-		//$delivered = R::find( 'orders', ' closed LIKE ? ', [ 'opens' ] );
+		
 		if($delivered == null){
 			$error = "No open order";
 			return json_encode($error);
@@ -48,7 +48,7 @@ $app->post('/returned', function (Request $request, Response $response){
 	
 	try {
 		$pdo = "UPDATE `orders` SET `closed`='returned' WHERE `order_id` = '$order_id'";
-		$returned = R::exec($pdo);
+		 R::exec($pdo);
 		
 		return json_encode($return);
 		
@@ -66,7 +66,7 @@ $app->post('/closed', function (Request $request, Response $response){
 	
 	try {
 		$pdo = "UPDATE `orders` SET `closed`='closed' WHERE `order_id` = '$order_id'";
-		$returned = R::exec($pdo);
+		 R::exec($pdo);
 		
 		return json_encode($close);
 		

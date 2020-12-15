@@ -27,14 +27,18 @@ function dateDifference($date1, $date2)
 			}
 		}
 		$str = "";
-		if($dayFix > 0)
+		if($dayFix > 0){
 			$str.= $dayFix." day ";
-		if($hourFix > 0)
+			}
+		if($hourFix > 0){
 			$str.= $hourFix." hour ";
-		if($minFix > 0)
+		}
+		if($minFix > 0){
 			$str.= $minFix." min ";
-		if($secFix > 0)
+		}
+		if($secFix > 0){
 			$str.= $secFix." sec ";
+		}
 		return $str;
 	}
 
