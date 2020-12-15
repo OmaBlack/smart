@@ -11,9 +11,6 @@ include '../../include/functions/block.php';
 
 
 
-$dayone = strtotime(date('01-m-Y')) ;
-$now_time = strtotime("now");
-
 //get user Informations
 $app = new \Slim\App;
 
@@ -150,11 +147,35 @@ R::close();
 
 });
 
+$app->post('/admin', function (Request $request, Response $response){
+	
+ 	$user_id = $request->getParam('email');
+   	$pwd = $request->getParam('pwd');
+	
+	$encPWD = md5($pwd) ;
+	
+	$pdo = "SELECT * FROM `admin` WHERE `email` = '$user_id'";
+	
+	$login = R::getRow($pdo); 
+	
+	if($login == null){
+		$error ='{"ok":false,"description":"Please enter a valid user!"}';
+		return ($error);
+	}else{
+		if ($encPWD  === $login['pwd']) {
+			$values =array("ok"=>true, "description"=>$login);
+			return json_encode($values);
+		}else{
+			$error ='{"ok":false,"description":"Incorrect Password!"}';
+			return json_encode($error);
+		}
+	}
+});
 
 function ValidChecker($org,$usr)
 {
 	# code...
-	if($user !== 'Live' || $org !=='Approve'){
+	if($usr !== 'Live' || $org !=='Approve'){
 		
 		$stop ='{"ok":false,"error_code":501,"description":"This account is not allowed to continued"}';
 		exit($stop);

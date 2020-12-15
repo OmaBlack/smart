@@ -9,8 +9,6 @@ require '../../include/dbsol/conn.php';
 include '../../include/utlites/cors.php';
 include '../include/functions/block.php';
 
-$dayone = strtotime(date('01-m-Y')) ;
-$now_time = strtotime("now");
 
 //get user Informations
 $app = new \Slim\App;
@@ -20,21 +18,21 @@ $app = new \Slim\App;
 $app->get('/bank/{id}', function (Request $request, Response $response, array $args) {
 	$id = $args['id'];
 	echo dashboard($id);
-  	R::close();
+  
 
 });
 
 $app->get('/screener/{id}', function (Request $request, Response $response, array $args) {
 	$id = $args['id'];
 	echo screendashboard($id);
-  	R::close();
+  
 
 });
 
 $app->get('/regulator/{id}', function (Request $request, Response $response, array $args) {
 	$id = $args['id'];
 	echo regulatordashboard($id);
-  	R::close();
+  
 
 });
 
@@ -42,7 +40,7 @@ $app->get('/screener/screened/{id}', function (Request $request, Response $respo
 	$id = $args['id'];
 
 	return json_encode(ScreenedViewbags($id));
-  	R::close();
+  	
 
 });
 
@@ -52,16 +50,18 @@ $app->get('/banks/screened/{id}', function (Request $request, Response $response
 	 $sql = "SELECT `screening`.`Bag_id`, `Donor_id`, `Agent_Id`, `HBV`, `HCV`, `HIV`, `PVC`, `Test_date`, `Approved_by`, `Syphilis`, `Malaria`, `BloodType`, `Rhesus`, `ADDITIONAL` FROM `Bag` JOIN `screening` ON `Bag`.`Id`= `screening`.Bag_id JOIN `Request Screening` ON `Bag`.`Id`= `Request Screening`.`Bag_id` WHERE `Assigned_bloodBank` = '$id'";
 	 
 	 $bvs = R::getAll($sql);
+	 R::close();
 	 
 	 if ($bvs==null) {
 	 	# code...
+		
 		return json_encode('You have no bags at the moment');
 	 } else {
 	 	# code...
 		return json_encode($bvs);
 	 }
 	
-  	R::close();
+  	
 
 });
 
@@ -71,6 +71,7 @@ $app->get('/banks/pending/{id}', function (Request $request, Response $response,
 	 $sql = "SELECT `Request Screening`.`Id` AS requestREf, `Screener_id`, `Donated_date`, `Donor_id`, `Request Screening`.`Status`, `Bag_id`,`Generated_Date` FROM `Request Screening` JOIN `Bag` ON `Bag`.`Id` = `Request Screening`.`Bag_id` WHERE `Request Screening`.`Status`= 'Pending' AND `Bag`.`Assigned_bloodBank` = '$id'";
 	 
 	 $bvs = R::getAll($sql);
+	 R::close();
 	 
 	 if ($bvs==null) {
 	 	# code...
@@ -80,16 +81,16 @@ $app->get('/banks/pending/{id}', function (Request $request, Response $response,
 		return json_encode($bvs);
 	 }
 	
-  	R::close();
+  	
 
 });
 
 
 $app->get('/screener/pending/{id}', function (Request $request, Response $response, array $args) {
 	$id = $args['id'];
-
+	R::close();
 	return json_encode(ScreenPendingbags($id));
-  	R::close();
+  
 
 });
 
@@ -104,9 +105,9 @@ $app->get('/regulator/pending/{id}', function (Request $request, Response $respo
 		 $return =  $bags;
 	}
 	
-
+	R::close();
 	return json_encode($return);
-  	R::close();
+  	
 
 });
 
@@ -120,6 +121,7 @@ $app->post('/add', function (Request $request, Response $response){
 		$geo = $request->getParam('geo');
 		$Prospect = $request->getParam('Prospect_comments');
 		$state = $request->getParam('states');
+		$now_time = strtotime("now");
 		
  
 	try {
@@ -130,6 +132,7 @@ $app->post('/add', function (Request $request, Response $response){
 		$id = R::getInsertID();
 		
 		$values =array("ok"=>true, "description"=>"successful", "New id"=>$id);
+		R::close();
 		return json_encode($values);
 		
 	} catch (Exception $e) {
@@ -137,7 +140,7 @@ $app->post('/add', function (Request $request, Response $response){
 		return json_encode($error);
 	}
   
-   R::close();
+   
 
 });
 
@@ -145,7 +148,7 @@ function screendashboard($id)
 {
 	# code...
 	$result[] = array(ScreenedBags($id),AwaitingScreening($id), destroyed($id));
-	echo json_encode($result);
+	return json_encode($result);
 	
 }
 
@@ -153,7 +156,7 @@ function regulatordashboard($id)
 {
 	# code...
 	$result[] = array(Approval(),Approved($id), redestroyed($id));
-	echo json_encode($result);
+	return json_encode($result);
 	
 }
 
@@ -260,7 +263,7 @@ function dashboard($id)
 {
 	# code...
 	$result[] = array(unused($id),awaiting($id), destroyed($id),expired($id),safe($id),unsafe($id),viewbags($id));
-	echo json_encode($result);
+	return json_encode($result);
 	
 }
 

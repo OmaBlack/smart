@@ -10,10 +10,6 @@ include '../../include/utlites/cors.php';
 include '../../include/functions/block.php';
 
 
-
-$dayone = strtotime(date('01-m-Y')) ;
-$now_time = strtotime("now");
-
 //get user Informations
 $app = new \Slim\App;
 
@@ -25,13 +21,13 @@ $app->get('/moreinfo/{id}', function (Request $request, Response $response, arra
 	$pdo = "SELECT * FROM `screening` JOIN `Bag` on `screening`.`Bag_id` = `Bag`.`Id` JOIN `Request Screening` ON `Request Screening`.`Bag_id`= `Bag`.`Id` WHERE `screening`.`Bag_id` = '$id'";
 	$bag = R::getAll($pdo);
 	
+	 R::close();
+	
 	if($bag == null){
 		return "You have no bags at the moment";
 	}else{
 		return json_encode($bag);
 	}
-
-   R::close();
 
 });
 

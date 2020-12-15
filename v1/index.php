@@ -9,9 +9,6 @@ require '../../include/dbsol/conn.php';
 include '../../include/utlites/cors.php';
 include '../../include/functions/dashboard.php';
 
-$dayone = strtotime(date('01-m-Y')) ;
-$now_time = strtotime("now");
-
 //get user Informations
 $app = new \Slim\App;
 
@@ -51,7 +48,7 @@ $app->post('/returned', function (Request $request, Response $response){
 	
 	try {
 		$pdo = "UPDATE `orders` SET `closed`='returned' WHERE `order_id` = '$order_id'";
-		$returned == R::exec($pdo);
+		$returned = R::exec($pdo);
 		
 		return json_encode($return);
 		
@@ -69,7 +66,7 @@ $app->post('/closed', function (Request $request, Response $response){
 	
 	try {
 		$pdo = "UPDATE `orders` SET `closed`='closed' WHERE `order_id` = '$order_id'";
-		$returned == R::exec($pdo);
+		$returned = R::exec($pdo);
 		
 		return json_encode($close);
 		
