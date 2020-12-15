@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Screening Dashboard</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <ul class="nav__list">
+	 	 <li class="nav__item"><a href="index.html" class="nav__link">Dashboard</a> </li>
+         <li class="nav__item"><a href="pendingbags.html" class="nav__link">View Pending Bags</a> </li>
+         <!-- <li class="nav__item"><a href="viewbags.html" class="nav__link">View Approved Bags</a></li> -->
+         <li class="nav__item"><a href="#" class="nav__link" id="users">Add Users</a></li>
+         <li class="nav__item"><a href="#" onclick="logout()" class="nav__link">Log out</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="top">
+        <div class="top-section">
+          <p>
+            Hi,
+            <span class="name" id="name">
+              John Doe;
+            </span>
+            Welcome to SmartBag
+          </p>
+          <p>We are fighting counterfeit and saving lives!</p>
+          <p>Powered by BlockChain</p>
+        </div>
+        <a href="#" class="edit" onclick="openEditProfile()">Edit profile</a>
+      </section>
+
+      <section class="bottom">
+          <div class="container box">
+              <div class="box-inner">
+                  <p>Pending Approval</p>
+                  <p id='bag'>0</p>
+              </div>
+              <div class="box-inner">
+                  <p>Approved Bag(s)</p>
+                  <p id='awaiting'> 0</p>
+              </div>
+              <div class="box-inner">
+                  <p>Destroyed Bag(s)</p>
+                  <p id='destroyed'>0</p>
+              </div>
+          </div>
+      </section>
+
+      <section class="section-one">
+        <div class="container-form">
+            <h1>Add New User</h1>
+          <p>
+            Noted that you need at least A Supervisor Privileges to add a user
+          </p>
+          <form>
+              <div class="form-input">
+                  <label for="fname">First Name: </label>
+
+                  <input type="text" placeholder="first name" id ="fname">
+              </div>
+
+              <div class="form-input">
+                  <label for="lname">Last Name: </label>
+
+                  <input type="text" placeholder="last name" id ="lname">
+              </div>
+
+              <div class="form-input">
+                  <label for="number">Phone Number: </label>
+
+                  <input type="text" placeholder="+234801234567" id ="phone">
+              </div>
+
+              <div class="form-input">
+                  <label for="email">Email: </label>
+
+                  <input type="email" placeholder="demo@email.com" id ="email">
+              </div>
+
+              <div class="form-input">
+                  <label for="privilege">Privilege</label>
+                  <select name="privilege" id="privilege" class="select-box" >
+                <option selected>--Select a Privilege--</option>
+                <option value="data_entry">Data Entry Officer</option>
+                <option value="Supervisor">Supervisor</option>
+              </select>
+              </div>
+
+              <div class="btn">
+                  <input type="button" value="Submit Request" class="btn-sub" onclick="addUser()" >
+              </div>
+          </form>
+        </div>
+    </section>
+	
+	<!-- //edit profile    -->    
+	<section class="edit-profile-info" style="display: none;">
+	       <div class="container-form">
+	           <h1>Edit Your Profile</h1>
+ 
+	         <form>
+	             <div class="form-input">
+	                 <label for="fname">First Name: </label>
+
+	                 <input type="text" placeholder="first name" id="editfname">
+	             </div>
+
+	             <div class="form-input">
+	                 <label for="lname">Last Name: </label>
+
+	                 <input type="text" placeholder="last name" id="editlname">
+	             </div>
+
+	             <div class="form-input">
+	                 <label for="number">Phone Number: </label>
+
+	                 <input type="text" placeholder="+234801234567" id="editphone">
+	             </div>
+
+           
+
+	             <div class="btn">
+	                 <input type="button" value="Submit Request" class="btn-sub" onclick="editUser()" >
+	             </div>
+	         </form>
+	       </div>
+	   </section>
+	
+    </main>
+    <script src="./app.js"></script>
+	<script src="../js/regulatordashboard.js"></script>
+	<script src="../js/logout.js"></script>
+  </body>
+</html>

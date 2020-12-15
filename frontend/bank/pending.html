@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bank dashboard</title>
+    <link rel="stylesheet" href="./style.css" />
+	 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+	 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script> 
+	 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script> 
+	<style>
+		
+		
+		/* Style The Dropdown Button */
+		.dropbtn {
+		  background-color:  #fff;
+		  border: 1px solid rgb(190, 14, 14);
+		  width: 90px;
+		  height:15px;
+		  border-radius: 8px;
+		  color: rgb(190, 14, 14);
+		  padding: 10px;
+		  font-size: 13px;
+		  cursor: pointer;
+		}
+
+		/* The container <div> - needed to position the dropdown content */
+		.dropdown {
+		  position: relative;
+		  display: inline-block;
+		}
+
+		/* Dropdown Content (Hidden by Default) */
+		.dropdown-content {
+		  display: none;
+		  position: absolute;
+		  background-color: #f9f9f9;
+		  border-radius: 8px;
+		  border: 1px solid rgb(190, 14, 14);
+		  min-width: 160px;
+		  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		  z-index: 1;
+		}
+
+		/* Links inside the dropdown */
+		.dropdown-content a {
+		  color: rgb(190, 14, 14);
+		  padding: 12px 16px;
+		  text-decoration: none;
+		  display: block;
+		}
+
+		/* Change color of dropdown links on hover */
+		.dropdown-content a:hover {background-color: #f1f1f1}
+
+		/* Show the dropdown menu on hover */
+		.dropdown:hover .dropdown-content {
+		  display: block;
+		}
+
+		/* Change the background color of the dropdown button when the dropdown content is shown */
+		.dropdown:hover .dropbtn {
+		  background-color: #f9f9f9;
+		}
+	</style>
+	
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <ul class="nav__list">
+            <li class="nav__item">
+              <a href="index.html" class="nav__link">Dashboard</a>
+            </li>
+          <li class="nav__item">
+            <a href="#" class="nav__link" id="bag">Request Bags</a>
+          </li>
+          <li class="nav__item">
+            <a href="#" class="nav__link" id="requestScreening">Request Screening</a>
+          </li>
+          <li class="nav__item">
+            <a href="ViewBags.html" class="nav__link">Screened</a>
+          </li>
+          <li class="nav__item">
+            <a href="pending.html" class="nav__link">Pending</a>
+          </li>
+          <li class="nav__item">
+            <a href="#" class="nav__link" id="users">Add Users</a>
+          </li>
+          <li class="nav__item">
+            <a href="#" onclick="logout()" class="nav__link">Log out</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="top">
+        <div class="top-section">
+          <p>
+            Hi,
+            <span class="name" id="name">
+              John Doe
+            </span>;
+            Welcome to SmartBag
+          </p>
+          <p>We are fighting counterfeit and saving lives!</p>
+          <p>Powered by BlockChain</p>
+        </div>
+        <a href="#" class="edit" onclick="openEditProfile()" >Edit profile</a>
+      </section>
+	  <section class="bottom">
+        
+		<table id="MyTable" class="display" cellspacing="0" width="98%" style="margin-left: 20px; margin-right: 30px;">
+		 <thead >
+		    <tr>
+			  <th class="th-sm"></th>
+		      <th class="th-sm">Bag Id</th>
+		      <th class="th-sm">Date of Donation</th>
+		      <th class="th-sm">Donor Id</th>
+		      <th class="th-sm">Status</th>
+			  <th class="th-sm"></th>
+			  
+		    </tr>
+		  </thead>
+		  <tbody id='bagCon'>
+		   
+		    
+		  </tbody>
+		  
+		</table>
+		
+      </section>
+
+
+
+      <section class="section-one" >
+        <div class="container-form">
+            <h1>Add New User</h1>
+          <p>
+            Noted that you need at least A Supervisor Privileges to add a user
+          </p>
+          <form>
+              <div class="form-input">
+                  <label for="fname">First Name: </label>
+
+                  <input type="text" placeholder="first name" id="fname">
+              </div>
+
+              <div class="form-input">
+                  <label for="lname">Last Name: </label>
+
+                  <input type="text" placeholder="last name" id="lname">
+              </div>
+
+              <div class="form-input">
+                  <label for="number">Phone Number: </label>
+
+                  <input type="text" placeholder="+234801234567" id="phone">
+              </div>
+
+              <div class="form-input">
+                  <label for="email">Email: </label>
+
+                  <input type="email" placeholder="demo@email.com" id="email">
+              </div>
+
+              <div class="form-input">
+                  <label for="privilege">Privilege</label>
+                  <select name="privilege" id="privilege" class="select-box"
+                <option selected>Select a Privilege</option>
+                <option value="data_entry">Data entry Officer</option>
+                <option value="Supervisor">Supervisor</option>
+              </select>
+              </div>
+
+              <div class="btn">
+                  <input type="button" value="Submit Request" class="btn-sub" onclick="addUser()" >
+              </div>
+          </form>
+        </div>
+    </section>
+
+    <section class="request" style="display: none;">
+        <h1>Request Bags</h1>
+        <form class="request-section">
+          <div class="request-form">
+            <label for="bag">Enter the number of bag(s):</label>
+            <input type="text" placeholder="10" class="number"  id ='bagrequest'/>
+          </div>
+          <input type="button" value="Submit Request" class="btn" onclick="requestBag()" />
+        </form>
+      </section>
+	  
+	   <section class="request-screening-trans" style="display: none;">
+		    <div class="container-form">
+				<h1>Transfer your blood bag to another bloodbank</h1>
+	            <form>
+	                <div class="form-input">
+	                    <label for="id">Bag ID: </label>
+
+	                    <input type="text" id="BagtransID" placeholder="1022219" disabled>
+	                </div>
+
+	                <div class="form-input">
+	                    <label for="donor">BloodBank ID: </label>
+
+	                    <input type="text"id="bbid" placeholder="2012322">
+	                </div>
+
+	                <div class="btn">
+	                    <input type="button" value="Submit Request" class="btn-sub" onclick="RequestTransfer()">
+	                </div>
+	            </form>
+			</div>
+	   </section>   
+
+       <section class="request-transfers" style="display: none;">
+        <div class="container-form">
+            <h1>Request Screening</h1>
+
+          <form>
+              <div class="form-input">
+                  <label for="id">Bag ID: </label>
+
+                  <input type="text" id="BagID" placeholder="1022219">
+              </div>
+
+              <div class="form-input">
+                  <label for="donor">Donor ID: </label>
+
+                  <input type="text"id="DonorID" placeholder="2012322">
+              </div>
+
+              <div class="form-input">
+                  <label for="screening">Screening Center:</label>
+                  <select name="screening" id="screening" class="select-box">
+                <option selected>Select a screening center</option>
+                <option value="2">Lagos State Island Maternity Hospital</option>
+             
+              </select>
+              </div>
+
+              <div class="btn">
+                  <input type="button" value="Submit Request" class="btn-sub" onclick="RequestScreening()">
+              </div>
+          </form>
+        </div>
+    </section>
+	
+	
+	
+	<!-- //edit profile   -->     
+	<section class="edit-profile-info" style="display: none;">
+        <div class="container-form">
+            <h1>Edit Your Profile</h1>
+  
+          <form>
+              <div class="form-input">
+                  <label for="fname">First Name: </label>
+
+                  <input type="text" placeholder="first name" id="editfname">
+              </div>
+
+              <div class="form-input">
+                  <label for="lname">Last Name: </label>
+
+                  <input type="text" placeholder="last name" id="editlname">
+              </div>
+
+              <div class="form-input">
+                  <label for="number">Phone Number: </label>
+
+                  <input type="text" placeholder="+234801234567" id="editphone">
+              </div>
+
+           
+
+              <div class="btn">
+                  <input type="button" value="Submit Request" class="btn-sub" onclick="editUser()" >
+              </div>
+          </form>
+        </div>
+    </section>
+	
+     
+	
+    </main>
+	<script src="../js/bankdashboard.js"></script>
+	<script src="../js/logout.js"></script>
+    <script src="./app.js"></script>
+	<script>
+		
+		const urlx ='../../v1/dashboard/banks/pending/'+user.organizationsid;
+		
+	  	var t = "";
+		fetch(urlx)
+	    .then(response => response.json())
+	    .then(function(data) {
+			
+			if(data == 'You have no bags at the moment'){
+				document.getElementById("bagCon").innerHTML += '';
+			}else{
+				
+			 for (var i = 0; i < data.length; i++) {
+ 			 
+				var tr = "<tr>";
+				tr += "<td><input type='checkbox'></td>";
+				tr += "<td>"+data[i].Bag_id+"</td>";
+				tr += "<td>"+data[i].Donated_date+"</td>";
+				tr += "<td>"+data[i].Donor_id+"</td>";
+				tr += "<td>"+data[i].Status+"</td>";
+				tr += "<td><div class='dropdown'><button class='dropbtn'>More</button><div class='dropdown-content'><a href='#' onclick='transferBag("+data[i].Bag_id+")'>Transfer</a></div></div></td>";
+				tr += "</tr>";
+				t += tr;
+			 }
+			document.getElementById("bagCon").innerHTML += t;}
+	  });
+		
+		
+		$(document).ready(function() {  
+		    $('#MyTable').DataTable( {  
+		        initComplete: function () {  
+		            this.api().columns().every( function () {  
+		                var column = this;  
+		                var select = $('<select><option value=""></option></select>')  
+		                    .appendTo( $(column.footer()).empty() )  
+		                    .on( 'change', function () {  
+		                        var val = $.fn.dataTable.util.escapeRegex(  
+		                            $(this).val()  
+		                        );  
+		                //to select and search from grid  
+		                        column  
+		                            .search( val ? '^'+val+'$' : '', true, false )  
+		                            .draw();  
+		                    } );  
+   
+		                column.data().unique().sort().each( function ( d, j ) {  
+		                    select.append( '<option value="'+d+'">'+d+'</option>' )  
+		                } );  
+		            } );  
+		        }  
+		    } );  
+		} );  
+		
+	</script>
+  </body>
+</html>

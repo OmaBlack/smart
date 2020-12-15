@@ -1,0 +1,16 @@
+{
+
+	"authors": [
+		{
+			"name": "Oma-Black",
+			"email": "developer@lifebank.ng"
+		}
+	],
+	"require": {
+		"slim/slim": "^3.11.0",
+		"vlucas/phpdotenv": "^4.1"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "5.4.*"
+	}
+}

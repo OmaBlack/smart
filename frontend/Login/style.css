@@ -1,0 +1,55 @@
+@import './reset.css';
+
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Lato&display=swap');
+
+body {
+  background: #b30903;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  font-family: Lato, sans-serif;
+}
+
+.login {
+  background: white;
+  padding: 1em 2em 5em;
+  text-align: center;
+  min-height: 20em;
+  /* min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: .5em;
+}
+
+p{
+  color:  rgb(141, 141, 141);
+  margin-bottom: 2em;
+}
+input + input {
+  margin-top: 1em;
+}
+
+input{
+  padding: .5em .4em;
+  border-radius: .3em;
+  border: 1px solid #222;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  width: 100%;
+}
+
